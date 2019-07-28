@@ -30,7 +30,7 @@ def connect_mysql():
             # 创建关键词相应table
             init_command = ('CREATE TABLE {} ('
                 'id int auto_increment primary key not null,'
-                'companyShortName varchar(20),'
+                'companyShortName varchar(50),'
                 'companyFullName varchar(100),'
                 'positionName varchar(100),'
                 'jobNature varchar(10),'
@@ -40,7 +40,7 @@ def connect_mysql():
                 'city varchar(10),'
                 'linestation varchar(300),'
                 'financeStage varchar(20),'
-                'companySize varchar(20))').format(keyword)
+                'companySize varchar(20))').format(keyword.replace("+", "p").replace("#", "SHARP").replace(".", "dot"))
             ) 
 
     return connect
@@ -52,7 +52,7 @@ def insert_mysql(connect, info):
     global keyword
 
     with connect.cursor() as cursor:
-        sql = "INSERT INTO {} (companyShortName, companyFullName, positionName, jobNature, salary, education, workYear, city, linestation, financeStage, companySize) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')".format(keyword)
+        sql = "INSERT INTO {} (companyShortName, companyFullName, positionName, jobNature, salary, education, workYear, city, linestation, financeStage, companySize) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')".format(keyword.replace("+", "p").replace("#", "SHARP").replace(".", "dot"))
         cursor.execute(sql%info)
     connect.commit()
 
